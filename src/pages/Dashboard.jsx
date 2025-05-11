@@ -1,57 +1,31 @@
-import React, { useEffect, useState } from "react";
 import CourseModal from "../components/CourseModal";
 import CourseCard from "../components/CourseCard";
-import {
-    getCoursesWithProgress,
-    getCoursesWithoutProgress,
-} from "../API/courses";
+import { useDashboardData } from "../hooks/useDashboardData";
 
 const Dashboard = () => {
-    const [coursesWithProgress, setCoursesWithProgress] = useState([]);
-    const [coursesWithoutProgress, setCoursesWithoutProgress] = useState([]);
-    const [selectedCourse, setSelectedCourse] = useState(null);
-
-    useEffect(() => {
-        fetchCourses();
-    }, []);
 
 
-    const handleStartCourse = async (courseId) => {
-        try {
-            await API.post(`/courses/${courseId}/start`);
-            alert("Курс начат!");
-            setSelectedCourse(null); // закрыть модалку
-            fetchCourses(); // перезагрузить прогресс
-        } catch (err) {
-            console.error(err);
-            alert("Ошибка при запуске курса");
-        }
-    };
-
-    const fetchCourses = async () => {
-        try {
-            const [withProgress, withoutProgress] = await Promise.all([
-                getCoursesWithProgress(),
-                getCoursesWithoutProgress(),
-            ]);
-            setCoursesWithProgress(withProgress.data);
-            setCoursesWithoutProgress(withoutProgress.data);
-        } catch (err) {
-            console.error("Ошибка загрузки курсов:", err);
-        }
-    };
+    const {
+        coursesWithProgress,
+        coursesWithoutProgress,
+        selectedCourse,
+        setSelectedCourse,
+        user,
+        handleStartCourse,
+    } = useDashboardData();
 
     return (
         <>
+
             <div className="flex min-h-screen w-full">
                 {/* Левая панель */}
                 <aside className="fixed top-0 left-0 h-screen w-1/4 bg-gradient-to-b from-[#C7C4E9] to-[#8278F6] text-white flex flex-col items-center justify-center z-10">
                     <div className="flex flex-col items-center">
-                        <img src="/avatar.png" alt="avatar" className="w-60 rounded-full mb-4" />
-                        <h2 className="text-2xl font-bold mb-1">Katyfaz</h2>
-                        <p className="text-lg">Уровень <span className="font-bold">Мастер</span></p>
-                        <p className="text-sm mt-4">🕒 Время обучения</p>
-                        <p className="text-lg font-bold">205 часов</p>
+                        <img src="avatar.png" alt="avatar" className="w-60 rounded-full mb-4" />
+                        <h2 className="text-2xl font-bold mb-1">{user?.username || "..."}</h2>
+                        <p className="text-lg">Уровень <span className="font-bold">{user?.username || "..."}</span></p>
+                        <p className="text-sm mt-4">Общее количество очков</p>
+                        <p className="text-lg font-bold">{user?.total_xp || "..."}</p>
                     </div>
 
                     {/* Футер — прижат вниз */}
@@ -71,10 +45,17 @@ const Dashboard = () => {
 
                 {/* Правая панель */}
                 <main className="ml-[25%] w-[75%] max-h-screen overflow-y-auto p-10 bg-gray-50">
-                    {/* Курсы с прогрессом */}
-                    <h1 className="text-3xl font-bold text-[#8278F6] mb-8">
-                        Продолжим изучение!
-                    </h1>
+                    <div className="flex flex-row items-center justify-between mb-8">
+                        <h1 className="text-3xl font-bold text-[#8278F6]">
+                            Продолжим изучение!
+                        </h1>
+                        <button
+                            onClick={() => window.location.href = "/courses/1/levels"}
+                            className="bg-[#8278F6] text-white font-semibold px-4 py-2 rounded-xl hover:bg-[#6f66e0] transition"
+                        >
+                            Панель управления курсами
+                        </button>
+                    </div>
                     <div className="bg-gradient-to-b from-[#C7C4E9] to-[#8278F6] rounded-3xl p-6 mb-10">
                         <div className="flex gap-6 flex-wrap">
                             {coursesWithProgress.map((course) => (

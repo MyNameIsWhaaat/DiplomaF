@@ -1,5 +1,3 @@
-// src/api/courses.js
-import axios from "axios";
 import API from "./index";
 
 // Получение курсов с прогрессом

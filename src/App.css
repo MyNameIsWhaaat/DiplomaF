@@ -1,2 +1,15 @@
 @import "tailwindcss";
 
+@font-face {
+    font-family: "MonstBold";
+    src: url("/fonts/Montserrat-Bold.ttf") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "MonstReg";
+    src: url("../public/fonts/Montserrat-Regular.ttf") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+  }
