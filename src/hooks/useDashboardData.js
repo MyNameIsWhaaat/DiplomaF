@@ -20,8 +20,8 @@ export const useDashboardData = () => {
         getCoursesWithProgress(),
         getCoursesWithoutProgress(),
       ]);
-      setCoursesWithProgress(withProgress.data);
-      setCoursesWithoutProgress(withoutProgress.data);
+      setCoursesWithProgress(Array.isArray(withProgress.data) ? withProgress.data : []);
+      setCoursesWithoutProgress(Array.isArray(withoutProgress.data) ? withoutProgress.data : []);
     } catch (err) {
       console.error("Ошибка загрузки курсов:", err);
     }
@@ -37,16 +37,19 @@ export const useDashboardData = () => {
   };
 
   const handleStartCourse = async (courseId) => {
-    try {
-      await API.post(`/courses/${courseId}/start`);
-      alert("Курс начат!");
-      setSelectedCourse(null);
-      fetchCourses();
-    } catch (err) {
-      console.error(err);
-      alert("Ошибка при запуске курса");
-    }
-  };
+  try {
+    await API.post(`/courses/start/${courseId}`);
+
+    // 🧠 Ждём загрузку свежих данных
+    await Promise.all([fetchCourses(), fetchUser()]);
+
+    // ✅ Закрываем модалку только после загрузки новых данных
+    setSelectedCourse(null);
+  } catch (err) {
+    console.error("Ошибка запуска курса:", err);
+    alert("Не удалось начать курс. Попробуйте позже.");
+  }
+};
 
   return {
     coursesWithProgress,

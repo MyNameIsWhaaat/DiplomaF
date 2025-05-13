@@ -1,20 +1,22 @@
 import LevelNode from "../components/LevelNode";
 import { useCourseLevels } from "../hooks/useCourseLevels";
+import "../pages/pages.css"
 
 const CourseLevelsPage = () => {
     
     const { courses, selectedCourseId, setSelectedCourseId, levels } = useCourseLevels();
 
     return (
+        
         <div className="flex w-full h-screen">
             {/* Левая панель */}
-            <aside className="w-1/4 bg-gradient-to-b from-[#C7C4E9] to-[#8278F6] text-white p-8 flex flex-col items-center">
-                <h2 className="text-2xl font-bold mb-6">Мои курсы</h2>
+            <aside className="w-1/4 bg-gradient-to-b from-[#8278F6] to-[#C7C4E9] text-white p-8 flex flex-col items-center">
+                <h2 className="text-2xl font-bold mb-6 MontserratBold">Мои курсы</h2>
                 {courses.map((course) => (
                     <button
                         key={course.id}
                         onClick={() => setSelectedCourseId(course.id)}
-                        className={`mb-3 py-2 px-4 rounded-full w-full text-sm font-bold text-center transition-all duration-200 ${course.id === selectedCourseId
+                        className={`mb-3 py-2 px-4 rounded-md w-full text-sm font-bold text-center transition-all duration-200 MontserratBold ${course.id === selectedCourseId
                             ? "bg-white text-[#8278F6]"
                             : "bg-[#ffffff33] hover:bg-white/20"
                             }`}
@@ -22,6 +24,12 @@ const CourseLevelsPage = () => {
                         {course.title}
                     </button>
                 ))}
+                <button
+                            onClick={() => window.location.href = "/dashboard"}
+                            className="bg-[#8278F6] text-white MontserratBold px-4 py-2 w-full rounded-md hover:bg-[#6f66e0] transition"
+                        >
+                            Панель управления курсами
+                        </button>
             </aside>
 
             {/* Правая часть */}

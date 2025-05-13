@@ -1,7 +1,18 @@
 import React from "react";
+import API from "../API";
 
 const CourseModal = ({ course, onClose, onStart }) => {
   if (!course) return null;
+
+  const handleStartCourse = async () => {
+    try {
+      await API.post(`/courses/start/${course.id}`);
+      onStart(course.id); // вызывает, например, редирект
+    } catch (error) {
+      console.error("Ошибка запуска курса:", error);
+      alert("Не удалось начать курс. Попробуйте позже.");
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
@@ -24,7 +35,7 @@ const CourseModal = ({ course, onClose, onStart }) => {
 
         <div className="flex justify-center">
           <button
-            onClick={() => onStart(course.id)}
+            onClick={handleStartCourse}
             className="bg-[#8278F6] hover:bg-[#6f68e0] text-white font-semibold px-6 py-2 rounded-md"
           >
             Начать курс

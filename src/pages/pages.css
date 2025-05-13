@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.MontserratBold{
+    font-family: "MonstBold";
+}
+
+.MonstReg{
+    font-family: "MonstReg";
+}
