@@ -1,9 +1,38 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { signUp } from "../API/auth";
+import SuccessRegModal from "../components/SuccessRegModal";
 
 const RegisterPage = () => {
+    const [nickname, setNickname] = useState("");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [showSuccess, setShowSuccess] = useState(false);
+    const navigate = useNavigate();
+
+    const handleRegister = async () => {
+        try {
+            await signUp({
+                username: nickname,
+                name: name,
+                email: email,
+                password: password,
+            });
+
+            setShowSuccess(true);
+            //navigate("/"); // переход на страницу логина
+        } catch (err) {
+            alert("Ошибка регистрации: " + (err.response?.data?.message || err.message));
+        }
+    };
+
+      const handleModalClose = () => {
+    setShowSuccess(false);
+    navigate("/"); // Переход на логин
+  };
     return (
-       
+
         <div className="flex min-h-screen w-full overflow-hidden">
             {/* Левая панель */}
             <div className="w-2/5 bg-gradient-to-b from-[#C7C4E9] to-[#8278F6] flex items-end justify-center relative overflow-visible">
@@ -26,24 +55,32 @@ const RegisterPage = () => {
                     <input
                         type="text"
                         placeholder="Ник"
+                        value={nickname}
+                        onChange={(e) => setNickname(e.target.value)}
                         className="w-full mb-4 p-3 border-3 border-[#8278F6]   rounded-md focus:outline-none focus:ring-2 focus:ring-[#8278F6]"
                     />
 
                     <input
                         type="text"
                         placeholder="Имя"
+                        value={name}
+            onChange={(e) => setName(e.target.value)}
                         className="w-full mb-4 p-3 border-3 border-[#8278F6]   rounded-md focus:outline-none focus:ring-2 focus:ring-[#8278F6]"
                     />
 
                     <input
                         type="text"
                         placeholder="Почта"
+                         value={email}
+            onChange={(e) => setEmail(e.target.value)}
                         className="w-full mb-4 p-3 border-3 border-[#8278F6]   rounded-md focus:outline-none focus:ring-2 focus:ring-[#8278F6]"
                     />
 
                     <input
                         type="password"
                         placeholder="Пароль"
+                        value={password}
+            onChange={(e) => setPassword(e.target.value)}
                         className="w-full mb-4 p-3 border-3 border-[#8278F6]  rounded-md focus:outline-none focus:ring-2 focus:ring-[#8278F6]"
                     />
 
@@ -57,12 +94,17 @@ const RegisterPage = () => {
                         </Link>
                     </div>
 
-                    <button className="w-full bg-[#8278F6] hover:bg-[#6f68e0] text-2xl  text-white font-extrabold py-2 rounded-md">
+                    <button
+                    onClick={handleRegister}
+                     className="w-full bg-[#8278F6] hover:bg-[#6f68e0] text-2xl  text-white font-extrabold py-2 rounded-md">
                         Зарегистрироваться
                     </button>
                 </div>
 
             </div>
+            {showSuccess && (
+        <SuccessRegModal message="Твой  аккаунт успешно создан!" onClose={handleModalClose} />
+      )}
         </div>
     );
 };

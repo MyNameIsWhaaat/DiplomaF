@@ -8,6 +8,7 @@ export const useDashboardData = () => {
   const [coursesWithoutProgress, setCoursesWithoutProgress] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [user, setUser] = useState(null);
+  const [isNewUser, setIsNewUser] = useState(false);
 
   useEffect(() => {
     fetchCourses();
@@ -31,8 +32,18 @@ export const useDashboardData = () => {
     try {
       const res = await getUserProfile();
       setUser(res.data);
+      setIsNewUser(res.data.IsNewUser);
     } catch (err) {
       console.error("Ошибка при загрузке профиля:", err);
+    }
+  };
+
+    const dismissWelcome = async () => {
+    try {
+      await API.post("/user/mark-not-new");
+      setIsNewUser(false); // <- закрываем окно
+    } catch (err) {
+      console.error("Ошибка при установке is_new_user:", err);
     }
   };
 
@@ -57,6 +68,8 @@ export const useDashboardData = () => {
     selectedCourse,
     setSelectedCourse,
     user,
+    isNewUser,
+    dismissWelcome,
     handleStartCourse,
   };
 };

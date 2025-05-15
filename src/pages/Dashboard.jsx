@@ -2,6 +2,7 @@ import CourseModal from "../components/CourseModal";
 import CourseCard from "../components/CourseCard";
 import { useDashboardData } from "../hooks/useDashboardData";
 import "../pages/pages.css"
+import WelcomeModal from "../components/WelcomeModal";
 
 const Dashboard = () => {
 
@@ -13,6 +14,8 @@ const Dashboard = () => {
         setSelectedCourse,
         user,
         handleStartCourse,
+        isNewUser,
+        dismissWelcome,
     } = useDashboardData();
 
     return (
@@ -25,7 +28,7 @@ const Dashboard = () => {
                         <h2 className="text-2xl mb-1 MontserratBold">{user?.username || "..."}</h2>
                         <p className="text-lg MonstReg">Уровень <span className="font-bold MontserratBold">{user?.profile_level || "..."}</span></p>
                         <p className=" text-1xl mt-4 MonstReg">Общее количество очков</p>
-                        <p className="text-lg font-bold MontserratBold">{user?.total_xp || "..."}</p>
+                        <p className="text-lg font-bold MontserratBold">{user?.total_xp || 0}</p>
                     </div>
                     <button
                         onClick={() => window.location.href = "/profile"}
@@ -56,25 +59,38 @@ const Dashboard = () => {
                             Панель управления курсами
                         </button>
                     </div>
-                    <div className="bg-gradient-to-b from-[#C7C4E9] to-[#8278F6] rounded-3xl p-6 mb-10">
-                        <div className="flex gap-6 flex-wrap">
-                            {coursesWithProgress.map((course) => (
-                                <CourseCard
-                                    key={course.id}
-                                    title={course.title}
-                                    subtitle={course.short_description}
-                                    imageUrl={course.image_url}
-                                    xpEarned={course.xp_earned} 
-                                    xpReward={course.xp_reward}          
-                                    onClick={() => console.log("Открыть курс", course.id)}
-                                    hasProgress={true}
+                    <div className="bg-gradient-to-b from-[#C7C4E9] to-[#8278F6] rounded-3xl p-6 mb-15 ">
+                        {coursesWithProgress.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center w-full py-12 ">
+                                <img
+                                    src="https://66.media.tumblr.com/fb13686d4e89bf7347ef07bbfbc527d2/tumblr_mu6g5naKzL1s8hnhko1_500.gif"
+                                    alt="Empty state"
+                                    className="w-94  object-contain mb-6"
                                 />
-                            ))}
-                        </div>
+                                <p className="text-white text-2xl MontserratBold text-center">
+                                    Пока что здесь пусто!<br />Но в твоих силах это изменить 💪
+                                </p>
+                            </div>
+                        ) : (
+                            <div className="flex gap-6 flex-wrap">
+                                {coursesWithProgress.map((course) => (
+                                    <CourseCard
+                                        key={course.id}
+                                        title={course.title}
+                                        subtitle={course.short_description}
+                                        imageUrl={course.image_url}
+                                        xpEarned={course.xp_earned}
+                                        xpReward={course.xp_reward}
+                                        onClick={() => console.log("Открыть курс", course.id)}
+                                        hasProgress={true}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </div>
                     {/* Курсы без прогресса */}
-                    <div className="bg-gradient-to-b from-[#8278F6] to-[#C7C4E9] rounded-3xl p-6 mb-10">
-                        <h2 className="text-3xl MontserratBold text-[white] mb-8">
+                    <div className="bg-gradient-to-b from-[#8278F6] to-[#C7C4E9] rounded-3xl p-15 ">
+                        <h2 className="text-3xl MontserratBold text-[white] mb-8 ">
                             Время посмотреть что-то новое!
                         </h2>
                         <div className="flex gap-6 flex-wrap">
@@ -91,6 +107,9 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </main>
+                {isNewUser && (
+            <WelcomeModal onClose={dismissWelcome} />
+)}
             </div>
 
             <CourseModal
@@ -98,6 +117,8 @@ const Dashboard = () => {
                 onClose={() => setSelectedCourse(null)}
                 onStart={handleStartCourse}
             />
+
+            
         </>
     );
 

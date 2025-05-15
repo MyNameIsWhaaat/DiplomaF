@@ -28,7 +28,7 @@ const CourseLevelsPage = () => {
                             onClick={() => window.location.href = "/dashboard"}
                             className="bg-[#8278F6] text-white MontserratBold px-4 py-2 w-full rounded-md hover:bg-[#6f66e0] transition"
                         >
-                            Панель управления курсами
+                            Главная страница
                         </button>
             </aside>
 

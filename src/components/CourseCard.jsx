@@ -19,9 +19,10 @@ const CourseCard = ({
 
   return (
     <div
-      className="bg-white rounded-2xl shadow-md p-6 w-[290px] h-[330px] flex flex-col items-center justify-between"
-      onClick={onClick}
-    >
+  className="bg-white rounded-2xl shadow-md p-6 w-[290px] h-[345px] flex flex-col items-center justify-between 
+             transition-transform transform hover:-translate-y-2 hover:shadow-xl cursor-pointer"
+  onClick={onClick}
+>
       <img
         src={imageUrl || "/CourseIcon.png"}
         alt="Course"

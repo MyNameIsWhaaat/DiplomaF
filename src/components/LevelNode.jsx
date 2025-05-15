@@ -56,7 +56,7 @@ const LevelNode = ({ level, index, isLast }) => {
                             <p className="text-xs flex items-center justify-center gap-1">
                                 <img src="/Clock.png" alt="Completed" className="w-6 h-6 MonstReg" /> Время
                             </p>
-                            <p className="text-lg MontserratBold">{level.time_spent ?? 0}</p>
+                            <p className="text-lg MontserratBold">{level.time_spent ?? 0} мин.</p>
                         </div>
                         <div>
                             <p className="text-xs flex items-center justify-center gap-1">
