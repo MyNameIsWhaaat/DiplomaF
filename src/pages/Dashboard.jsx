@@ -20,41 +20,54 @@ const Dashboard = () => {
 
     return (
         <>
-            <div className="flex min-h-screen w-full">
+            <div className=" flex min-h-screen w-full ">
                 {/* Левая панель */}
-                <aside className="fixed top-0 left-0 h-screen w-1/4 bg-gradient-to-b from-[#C7C4E9] to-[#8278F6] text-white flex flex-col items-center justify-center z-10">
-                    <div className="flex flex-col items-center">
-                        <img src="avatar.png" alt="avatar" className="w-60 rounded-full mb-4" />
-                        <h2 className="text-2xl mb-1 MontserratBold">{user?.username || "..."}</h2>
-                        <p className="text-lg MonstReg">Уровень <span className="font-bold MontserratBold">{user?.profile_level || "..."}</span></p>
-                        <p className=" text-1xl mt-4 MonstReg">Общее количество очков</p>
-                        <p className="text-lg font-bold MontserratBold">{user?.total_xp || 0}</p>
-                    </div>
-                    <button
-                        onClick={() => window.location.href = "/profile"}
-                        className="bg-white text-[#8278F6] mt-4 px-4 py-2 rounded-full font-semibold hover:brightness-95 transition"
-                    >
-                        Профиль
-                    </button>
-                    {/* Футер — прижат вниз */}
-                    <div className="absolute bottom-4 text-xs text-white/80 flex flex-col gap-1 items-center">
-                        <div className="flex">
-                            <div>
-                            </div>
-                            <p className="mt-2">© Katyfaz, 2025</p>
+                <aside className="fixed top-0 left-0 h-screen w-1/4 min-w-[260px] bg-gradient-to-b from-[#8278F6] to-[#8278F6] text-white flex flex-col justify-between p-6 z-10 shadow-lg">
+
+                    {/* Верхняя часть — Профиль */}
+                    <div className="flex flex-col items-center text-center">
+                        <div className="relative mb-6">
+                            <img
+                                src="avatar.png"
+                                alt="avatar"
+                                className="w-44 h-44 object-cover rounded-full border-4 border-white shadow-lg"
+                            />
+                            {/* Индикатор онлайн */}
+                            <span className="absolute bottom-3 right-3 w-5 h-5 bg-green-400 border-2 border-white rounded-full"></span>
                         </div>
+
+                        <h2 className="text-2xl font-extrabold MontserratBold mb-2">{user?.username || "..."}</h2>
+                        <p className="text-lg MonstReg">Уровень: <span className="font-bold text-xl">{user?.profile_level || "..."}</span></p>
+
+                        {/* Карточка XP */}
+                        <div className="w-full mt-6 p-5 bg-white/20 rounded-xl shadow-inner backdrop-blur-sm">
+                            <p className="text-base MonstReg mb-2">Общее количество очков</p>
+                            <p className="text-3xl font-extrabold MontserratBold">{user?.total_xp || 0}</p>
+                        </div>
+
+                        {/* Кнопка */}
+                        <button
+                            onClick={() => window.location.href = "/profile"}
+                            className="mt-8 bg-white text-[#8278F6] px-6 py-3 rounded-full text-lg font-bold hover:scale-105 hover:shadow-lg transition-transform duration-200"
+                        >
+                            Профиль
+                        </button>
                     </div>
 
+                    {/* Нижняя часть — Футер */}
+                    <div className="text-sm text-white/70 text-center border-t border-white/30 pt-4">
+                        <p>© Katyfaz, 2025</p>
+                    </div>
                 </aside>
                 {/* Правая панель */}
-                <main className="ml-[25%] w-[75%] max-h-screen overflow-y-auto p-10 bg-gray-50">
+                <main className="ml-[25%] w-[75%] max-h-screen overflow-y-auto p-10 bg-[url('/dashBack.png')] bg-cover bg-center">
                     <div className="flex flex-row items-center justify-between mb-8">
                         <h1 className="text-3xl MontserratBold text-[#8278F6]">
                             Продолжим изучение!
                         </h1>
                         <button
                             onClick={() => window.location.href = "/courses/1/levels"}
-                            className="bg-[#8278F6] text-white MontserratBold px-4 py-2 rounded-xl hover:bg-[#6f66e0] transition"
+                            className="bg-[#8278F6] text-2xl text-white MontserratBold px-4 py-2 rounded-xl hover:bg-[#6f66e0] transition"
                         >
                             Панель управления курсами
                         </button>
@@ -108,8 +121,8 @@ const Dashboard = () => {
                     </div>
                 </main>
                 {isNewUser && (
-            <WelcomeModal onClose={dismissWelcome} />
-)}
+                    <WelcomeModal onClose={dismissWelcome} />
+                )}
             </div>
 
             <CourseModal
@@ -118,7 +131,7 @@ const Dashboard = () => {
                 onStart={handleStartCourse}
             />
 
-            
+
         </>
     );
 

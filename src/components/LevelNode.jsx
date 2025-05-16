@@ -3,11 +3,13 @@ import WaveConnector from "../components/WaveConnector";
 import API from "../API/index";
 import { useNavigate } from "react-router-dom";
 import "../pages/pages.css"
+import TheoryModal from "./TheoryModal";
 
 const LevelNode = ({ level, index, isLast }) => {
     const [showTooltip, setShowTooltip] = useState(false);
     const hideTimeout = useRef(null); // храним id таймера
     const navigate = useNavigate();
+    const [showTheory, setShowTheory] = useState(false);
 
     const handleEnter = () => {
         clearTimeout(hideTimeout.current);
@@ -46,7 +48,7 @@ const LevelNode = ({ level, index, isLast }) => {
             </div>
             {/* Всплывашка */}
             {showTooltip && (
-                <div className="absolute bottom-[-470%] left-1/2 -translate-x-1/2 w-72 p-6 rounded-3xl shadow-xl z-20 bg-gradient-to-b from-[#8278F6] to-[#C7C4E9] text-white">
+                <div className="absolute bottom-[-470%] left-1/2 -translate-x-1/2 w-72 p-6 rounded-3xl shadow-xl z-20 bg-gradient-to-b from-[#8278F6] to-[#C7C4E9] text-white animate-fadeInScale">
                     <h3 className="text-xl font-Montserrat mb-4 min-h-[56px] text-center break-words MontserratBold">
                         {level.title}
                     </h3>
@@ -72,7 +74,8 @@ const LevelNode = ({ level, index, isLast }) => {
                         </div>
                     </div>
 
-                    <button className="w-full bg-white text-[#8278F6] MontserratBold py-2 rounded-full mb-2 hover:brightness-95">
+                    <button className="w-full bg-white text-[#8278F6] MontserratBold py-2 rounded-full mb-2 hover:brightness-95"
+                        onClick={() => setShowTheory(true)}>
                         Изучить теорию
                     </button>
                     {isCompleted ? (
@@ -97,7 +100,12 @@ const LevelNode = ({ level, index, isLast }) => {
                     )}
                 </div>
             )}
-
+            {showTheory && (
+                <TheoryModal
+                    levelId={level.id}
+                    onClose={() => setShowTheory(false)}
+                />
+            )}
             {/* Линия */}
             {!isLast && <WaveConnector />}
         </div>

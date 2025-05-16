@@ -1,6 +1,6 @@
 import React from "react";
 import API from "../API";
-import "../pages/pages.css"; // если стили у тебя здесь
+import "../pages/pages.css"; 
 
 const CourseModal = ({ course, onClose, onStart }) => {
   if (!course) return null;

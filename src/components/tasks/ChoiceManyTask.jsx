@@ -56,8 +56,11 @@ const ChoiceManyTask = ({ task, onComplete }) => {
       {result && (
         <div className="mt-4">
           <p>{result}</p>
-          <button onClick={onComplete} className="text-sm underline mt-2 text-[#8278F6]">
-            Далее
+          <button
+            onClick={onComplete}
+            className="mt-4 bg-[#8278F6] hover:bg-[#6c61f0] w-full text-white px-6 py-2 rounded-md font-semibold transition"
+          >
+            Продолжить
           </button>
         </div>
       )}

@@ -1,6 +1,7 @@
 import InputTask from "./tasks/InputTask";
 import ChoiceOneTask from "./tasks/ChoiceOneTask";
 import ChoiceManyTask from "./tasks/ChoiceManyTask";
+import MatchTask from "./tasks/MatchTask";
 
 const TaskRenderer = ({ task, onComplete }) => {
   switch (task.Type) {
@@ -10,6 +11,8 @@ const TaskRenderer = ({ task, onComplete }) => {
       return <ChoiceOneTask task={task} onComplete={onComplete} />;
     case "choice_many":
       return <ChoiceManyTask task={task} onComplete={onComplete} />;
+    case "match":
+      return <MatchTask task={task} onComplete={onComplete} />;
     default:
       return <p>Неизвестный тип: {task.type}</p>;
   }

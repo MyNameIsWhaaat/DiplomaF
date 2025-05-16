@@ -30,7 +30,7 @@ useEffect(() => {
 
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 bg-[url('https://kartinki.pics/uploads/posts/2020-10/1603412909_19-p-odnotonnii-nezhno-fioletovii-fon-24.jpg')] bg-cover bg-center min-h-screen">
+    <div className="fixed inset-0 flex items-center justify-center  z-50 min-h-screen bg-[url('/levelBack.png')] bg-cover bg-center">
 
       {/* Конфетти-слой */}
       <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full pointer-events-none z-0" />

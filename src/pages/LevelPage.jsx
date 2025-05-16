@@ -26,6 +26,8 @@ const LevelPage = () => {
   const currentTasks = isReviewMode ? reviewTasks : tasks;
   const task = currentTasks[index];
 
+  const [showReviewModal, setShowReviewModal] = useState(false);
+
   const handleComplete = async (isCorrect, earnedXP) => {
     if (!isCorrect) setMistakes((m) => m + 1);
     if (!isReviewMode) setXpTotal((xp) => xp + earnedXP); // в режиме review XP не считаем
@@ -44,7 +46,7 @@ const LevelPage = () => {
           setIndex(0);
           setXpTotal(0);
           setMistakes(0);
-          alert("Есть ошибки! Нужно пройти работу над ошибками.");
+          setShowReviewModal(true);
           return;
         }
 
@@ -71,9 +73,10 @@ const LevelPage = () => {
   if (!tasks.length) return <p>Нет заданий</p>;
 
   return (
-    <div className="p-10">
+    <>
+    <div className="p-10 min-h-screen bg-[url('/levelBack.png')] bg-cover bg-center">
       <h1 className="text-2xl font-bold mb-6">
-        {isReviewMode ? "Работа над ошибками" : `Уровень ${levelId}`}
+        {isReviewMode ? "Работа над ошибками" : `Прохождение уровня`}
       </h1>
 
       {!showSummary && task && (
@@ -89,7 +92,23 @@ const LevelPage = () => {
         />
       )}
     </div>
+    {showReviewModal && (
+  <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md text-center">
+      <h3 className="text-lg font-semibold mb-2 text-[#8278F6]">Работа над ошибками</h3>
+      <p className="mb-4 text-gray-700">Есть ошибки! Нужно пройти задания ещё раз, чтобы закрепить материал.</p>
+      <button
+        onClick={() => setShowReviewModal(false)}
+        className="bg-[#8278F6] text-white px-4 py-2 rounded-lg hover:bg-[#6c61f0] transition"
+      >
+        Начать повтор
+      </button>
+    </div>
+  </div>
+)}
+    </>
   );
+  
 };
 
 export default LevelPage;
