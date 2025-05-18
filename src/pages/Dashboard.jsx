@@ -48,7 +48,7 @@ const Dashboard = () => {
                         {/* Кнопка */}
                         <button
                             onClick={() => window.location.href = "/profile"}
-                            className="mt-8 bg-white text-[#8278F6] px-6 py-3 rounded-full text-lg font-bold hover:scale-105 hover:shadow-lg transition-transform duration-200"
+                            className="mt-8 bg-white text-[#8278F6] px-6 py-3 rounded-md text-lg w-full font-bold hover:scale-105 hover:shadow-lg transition-transform duration-200"
                         >
                             Профиль
                         </button>

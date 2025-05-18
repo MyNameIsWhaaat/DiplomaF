@@ -50,12 +50,14 @@ const CourseCard = ({
         </div>
       )}
 
-      <button
-        onClick={onClick}
-        className="bg-[#8278F6] hover:bg-[#6f68e0] text-white font-semibold text-sm px-4 py-2 rounded-md mt-4 w-60"
-      >
-        {hasProgress ? "Продолжить" : "Подробнее"}
-      </button>
+      {!hasProgress && (
+  <button
+    onClick={onClick}
+    className="bg-[#8278F6] hover:bg-[#6f68e0] text-white font-semibold text-sm px-4 py-2 rounded-md mt-4 w-60"
+  >
+    Подробнее
+  </button>
+)}
     </div>
   );
 };

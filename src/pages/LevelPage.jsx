@@ -41,6 +41,7 @@ const LevelPage = () => {
         const review = reviewRes.data;
 
         if (review && review.length > 0) {
+          setShowSummary(false);
           setIsReviewMode(true);
           setReviewTasks(review);
           setIndex(0);
